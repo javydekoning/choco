@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>microsoftmathematics</id>    
+    <version>4.0</version>
+    <title>Microsoft Mathematics</title>
+    <authors>Microsoft Corporation</authors>
+    <projectUrl>https://www.microsoft.com/en-au/download/details.aspx?id=15702</projectUrl>
+    <packageSourceUrl>https://github.com/dmariogatto/choco</packageSourceUrl>
+    <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/microsoftmathematics/MathApp.png</iconUrl>
+    <copyright>© 2011 Microsoft Corporation. All rights reserved.</copyright>
+    <tags>microsoftmathematics microsoft mathematics maths graphing calculator equations algebra trigonometry physics chemistry calculus</tags>
+    <summary>From basic math to precalculus, Microsoft Mathematics includes tools and features to help you achieve a better understanding of fundamental concepts and visualize mathematical concepts in new ways. Microsoft Mathematics 4.0 makes it easy to create graphs in 2D and 3D, calculate numerical results, solve equations or inequalities, and simplify algebraic expressions.</summary>
+    <description>
+      Microsoft Mathematics provides a set of mathematical tools that help students get school work done quickly and easily. With Microsoft Mathematics, students can learn to solve equations step-by-step while gaining a better understanding of fundamental concepts in pre-algebra, algebra, trigonometry, physics, chemistry, and calculus.
+
+      Microsoft Mathematics includes a full-featured graphing calculator that’s designed to work just like a handheld calculator. Additional math tools help you evaluate triangles, convert from one system of units to another, and solve systems of equations.
+    </description>
+    <dependencies>
+      <dependency id="dotnet3.5" version="3.5.20160716" />
+      <dependency id="vcredist2008" version="9.0.30729.6163" /> 
+      <dependency id="chocolatey-core.extension" version="1.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
