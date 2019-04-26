@@ -19,7 +19,6 @@
     </description>
     <dependencies>
       <dependency id="dotnet3.5" version="3.5.20160716" />
-      <dependency id="vcredist2008" version="9.0.30729.6163" /> 
       <dependency id="chocolatey-core.extension" version="1.1.0" />
     </dependencies>
   </metadata>
