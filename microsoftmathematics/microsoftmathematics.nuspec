@@ -7,7 +7,7 @@
     <title>Microsoft Mathematics</title>
     <authors>Microsoft Corporation</authors>
     <projectUrl>https://www.microsoft.com/en-au/download/details.aspx?id=15702</projectUrl>
-    <packageSourceUrl>https://github.com/dmariogatto/choco</packageSourceUrl>
+    <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/microsoftmathematics</packageSourceUrl>
     <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/microsoftmathematics/MathApp.png</iconUrl>
     <copyright>© 2011 Microsoft Corporation. All rights reserved.</copyright>
     <tags>microsoftmathematics microsoft mathematics maths graphing calculator equations algebra trigonometry physics chemistry calculus</tags>
