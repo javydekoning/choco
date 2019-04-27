@@ -9,6 +9,7 @@
     <projectUrl>https://www.microsoft.com/en-au/download/details.aspx?id=15702</projectUrl>
     <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/microsoftmathematics</packageSourceUrl>
     <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/microsoftmathematics/MathApp.png</iconUrl>
+    <licenseUrl>https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx</licenseUrl>
     <copyright>© 2011 Microsoft Corporation. All rights reserved.</copyright>
     <tags>microsoftmathematics microsoft mathematics maths graphing calculator equations algebra trigonometry physics chemistry calculus</tags>
     <summary>From basic math to precalculus, Microsoft Mathematics includes tools and features to help you achieve a better understanding of fundamental concepts and visualize mathematical concepts in new ways. Microsoft Mathematics 4.0 makes it easy to create graphs in 2D and 3D, calculate numerical results, solve equations or inequalities, and simplify algebraic expressions.</summary>
@@ -18,7 +19,9 @@
       Microsoft Mathematics includes a full-featured graphing calculator that’s designed to work just like a handheld calculator. Additional math tools help you evaluate triangles, convert from one system of units to another, and solve systems of equations.
     </description>
     <dependencies>
-      <dependency id="dotnet3.5" version="3.5.20160716" />
+      <dependency id="dotnet3.5" />
+      <dependency id="vcredist2008" />
+      <dependency id="directx" />
       <dependency id="chocolatey-core.extension" version="1.1.0" />
     </dependencies>
   </metadata>
