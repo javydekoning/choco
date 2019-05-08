@@ -18,12 +18,12 @@ $downloadArgs = @{
 Get-ChocolateyWebFile @downloadArgs
 
 $extractionPath = "$toolsDir\MSetupFiles"
-Invoke-Expression "& '$fullFilePath' /T:'$extractionPath' /C | Out-Null" 
+Start-ChocolateyProcessAsAdmin -Statements "/T:`"$extractionPath`" /C" -ExeToRun $fullFilePath
 
 $installerType = 'MSI'
 $filePath32 = "$extractionPath\MSMath_x86.msi"
 $filePath64 = "$extractionPath\MSMath_x64.msi"
-$slientArgs = "/passive FROMSETUP=1 ALREADYRUNNING=0 DOTNET35=1 SXSOFF=0"
+$slientArgs = '/passive FROMSETUP=1 ALREADYRUNNING=0 DOTNET35=1 SXSOFF=0'
 
 $packageArgs = @{
     packageName    = $env:ChocolateyPackageName
@@ -41,4 +41,4 @@ $packageArgs = @{
     validExitCodes = @(0)
 }
 
-Install-ChocolateyPackage @packageArgs
+Install-ChocolateyInstallPackage @packageArgs
