@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>amd-ryzen-master</id>
+    <version>1.5.1.0862</version>
+    <title>AMD Ryzen Master</title>
+    <authors>Advanced Micro Devices, Inc</authors>
+    <projectUrl>https://www.amd.com/en/technologies/ryzen-master</projectUrl>
+    <docsUrl>https://www.amd.com/en/support/contact</docsUrl>
+    <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/amd-ryzen-master</packageSourceUrl>
+    <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/amd-ryzen-master/amd.png</iconUrl>
+    <licenseUrl>https://www.amd.com/en/support/eula</licenseUrl>
+    <copyright>©2019 Advanced Micro Devices, Inc</copyright>
+    <tags>amd ryzen threadripper am4 tr4 a320 b350 b450 x370 x470 x399</tags>
+    <summary></summary>
+    <description>
+Your tool to unlock AMD Ryzen Processors. Every AMD Ryzen processor is multiplier-unlocked from the factory, so you can personalize performance to your taste. AMD provides the AMD Ryzen Master utility to access this powerful advantage
+
+AMD Ryzen Master provides for up to four profiles to store custom user-defined configurations for both the Ryzen™ CPU, integrated Radeon™ Vega graphics and DDR4 memory. You can adjust active cores, integrated graphics frequency and adjust memory timings, too, to optimize general performance or fine tune for your favorite applications. The integrated GPU in the AMD Ryzen™ with Radeon Vega graphics processor can also be overclocked for even higher gaming performance when overclocking cores and memory. Tune up your favorite game, rename the profile and you can easily return to the optimized setting. Accurate hardware status updates are vital, so AMD Ryzen Master has you covered with both real-time monitoring and a histogram of per-core clock rates and temperature, including average and peak readings.
+
+Version 1.5 and newer Ryzen Master includes support for Dynamic Local Mode, an exciting new feature specifically for AMD Ryzen Threadripper WX Series processors that can automatically improve performance in select applications.
+    </description>
+    <dependencies>
+      <dependency id="chocolatey-core.extension" version="1.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

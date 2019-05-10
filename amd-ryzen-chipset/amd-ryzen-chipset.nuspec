@@ -4,7 +4,7 @@
   <metadata>
     <id>amd-ryzen-chipset</id>
     <version>18.50.0422</version>
-    <title>AMD Chipset Drivers</title>
+    <title>AMD Ryzen Chipset Drivers</title>
     <authors>Advanced Micro Devices, Inc</authors>
     <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>
     <docsUrl>https://www.amd.com/en/support/contact</docsUrl>
