@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>amd-ryzen-chipset</id>
+    <version>18.50.0422</version>
+    <title>AMD Chipset Drivers</title>
+    <authors>Advanced Micro Devices, Inc</authors>
+    <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>
+    <docsUrl>https://www.amd.com/en/support/contact</docsUrl>
+    <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/amd-ryzen-chipset</packageSourceUrl>
+    <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/amd-ryzen-chipset/amd.png</iconUrl>
+    <licenseUrl>https://www.amd.com/en/support/eula</licenseUrl>
+    <copyright>©2019 Advanced Micro Devices, Inc</copyright>
+    <tags>amd ryzen threadripper chipset am4 tr4 a320 b350 b450 x370 x470 x399</tags>
+    <summary></summary>
+    <description>
+Supports:
+
+Windows® 7/10 for
+
+- 2nd Gen AMD Ryzen™ Desktop Processor
+- 7th-Gen AMD A-Series Processors
+- AMD Ryzen™ Desktop Processor
+- AMD X470 Chipset
+- AMD X370 Chipset
+- AMD B450 Chipset
+- AMD B350 Chipset
+- AMD A320 Chipset
+
+Windows® 10 only for
+
+- 2nd Gen AMD Ryzen™ Threadripper™ Processor
+- AMD Ryzen™ Threadripper™ Processor
+- AMD Ryzen™ Desktop Processor with Radeon™ Vega Graphics
+- AMD Ryzen™ Mobile Processor with Radeon™ Vega Graphics
+- AMD X399 Chipset
+
+Package Includes:
+
+- AMD Chipset Drivers
+- AMD Ryzen™ Balanced Power Plan
+    </description>
+    <dependencies>
+      <dependency id="vcredist2015" />
+      <dependency id="chocolatey-core.extension" version="1.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
