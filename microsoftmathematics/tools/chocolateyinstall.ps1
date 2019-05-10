@@ -42,3 +42,6 @@ $packageArgs = @{
 }
 
 Install-ChocolateyInstallPackage @packageArgs
+
+Remove-Item $fullFilePath -Force -ErrorAction SilentlyContinue | Out-Null
+Remove-Item $extractionPath -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
