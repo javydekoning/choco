@@ -2,7 +2,7 @@
 
 $procName = (Get-WmiObject Win32_Processor).Name
 if (!$procName.Contains('Ryzen')) {
-    Write-Error 'Only compatiable with AMD Ryzen processors'
+    Write-Error 'Only compatible with AMD Ryzen processors'
 }
 
 $url = 'https://download.amd.com/Desktop/AMD-Ryzen-Master.exe'
