@@ -2,13 +2,18 @@
 
 $procName = (Get-WmiObject Win32_Processor).Name
 if (!$procName.Contains('Ryzen')) {
-    Write-Error 'Only compatiable with AMD Ryzen processors'
+    Write-Error 'Only compatible with AMD Ryzen processors'
 }
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$url = 'https://drivers.amd.com/drivers/amd-chipset-drivers_18.50.0422.exe'
-$checksum = '26093A75ED4859E26FFEC58A1F528EAC803946C8E49C87AE2A42992E59AF2D6C'
+# Need to uninstall any existing version
+Write-Information 'Attempting removal of existing AMD Ryzen Chipset drivers...'
+$uninstallFile = Join-Path -Path $toolsDir -ChildPath 'chocolateyuninstall.ps1'
+Start-ChocolateyProcessAsAdmin "& `'$uninstallFile`'"
+
+$url = 'https://drivers.amd.com/drivers/amd_chipset_drivers_19.10.0429.exe'
+$checksum = 'FC811EE24F4150DA9BC4168EFCC299F2392C99763DE6CE2691686CE662A3AB8D'
 $fullFilePath = "$toolsDir\amd-chipset-drivers.exe"
 
 $downloadArgs = @{
@@ -35,7 +40,7 @@ Get-ChocolateyUnzip -FileFullPath $fullFilePath -Destination $extractionPath
 
 $installerType = 'EXE'
 $filePath = "$extractionPath\Setup.exe"
-$checksum = '1D6778C54D8808F4C4144DEB1D4DCC98C23085D90C8F745351BB8238BF234268'
+$checksum = 'FA360E1966FBF9D66C340C156D81A8BF2069EBFE609EB5741BE56C85F1E017B7'
 $slientArgs = '-INSTALL'
 
 $packageArgs = @{

@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>amd-ryzen-chipset</id>
-    <version>18.50.0422</version>
+    <version>19.10.0429</version>
     <title>AMD Ryzen Chipset Drivers</title>
     <authors>Advanced Micro Devices, Inc</authors>
     <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>
