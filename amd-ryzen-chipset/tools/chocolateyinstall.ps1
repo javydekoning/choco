@@ -18,15 +18,12 @@ else {
     $fullFilePath = "$toolsDir\amd-chipset-drivers.exe"
 
     $downloadArgs = @{
-        packageName    = $env:ChocolateyPackageName
-        fileFullPath   = $fullFilePath
-        url            = $url
-        url64          = $url
-        checksum       = $checksum
-        checksumType   = 'sha256'
-        checksum64     = $checksum
-        checksumType64 = 'sha256'
-        options        = @{
+        packageName  = $env:ChocolateyPackageName
+        fileFullPath = $fullFilePath
+        url          = $url
+        checksum     = $checksum
+        checksumType = 'sha256'
+        options      = @{
             Headers = @{             
                 Accept  = '*/*'
                 Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/a320'
@@ -49,14 +46,10 @@ else {
         unzipLocation  = $toolsDir
         fileType       = $installerType
         file           = $filePath
-        file64         = $filePath
         softwareName   = 'amd-ryzen-chipset*'
         checksum       = $checksum
         checksumType   = 'sha256'
-        checksum64     = $checksum
-        checksumType64 = 'sha256'
         silentArgs     = $slientArgs
-        silentArgs64   = $slientArgs
         validExitCodes = @(0)
     }
 
