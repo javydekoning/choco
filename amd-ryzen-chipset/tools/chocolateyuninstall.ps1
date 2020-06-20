@@ -1,31 +1,20 @@
 ﻿$ErrorActionPreference = 'Stop';
 
-$packageArgs = @{
-    packageName    = $env:ChocolateyPackageName
-    softwareName   = 'amd-ryzen-chipset*'
-    fileType       = 'EXE'
-    silentArgs     = '-UNINSTALL'
-    validExitCodes = @(0)
+$procName = (Get-WmiObject Win32_Processor).Name
+if (!$procName.Contains('Ryzen')) {
+    Write-Warning 'Only compatible with AMD Ryzen processors!'
+    Write-Warning 'Skipping uninstall...'
 }
+else {
+    $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$registryPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\AMD Catalyst Install Manager'
+    $checksum = 'E10649A1844D1B1BAF2B0C58BEDBC033AD817EC9F68FD5322AB793D6E855718D'
+    $filePath = "$toolsDir\amd-chipset-drivers.exe"
 
-if (Test-Path $registryPath) {
-    $uninstall = $false
+    Get-ChecksumValid -File $filePath -Checksum $checksum -ChecksumType 'sha256'
 
-    $installLocation = 'InstallLocation'
-    $keys = Get-ItemProperty -Path $registryPath
-    $installLocation = $keys | Select-Object -ExpandProperty $installLocation -ErrorAction SilentlyContinue
-    if ($installLocation) {
-        $file = Join-Path -Path $installLocation -ChildPath 'Setup.exe'   
-        if (Test-Path $file) {
-            $packageArgs['file'] = $file
-            Uninstall-ChocolateyPackage @packageArgs
-            $uninstall = $true
-        }
-    }
+    Start-Process -FilePath "$env:comspec" -ArgumentList "/c START /WAIT `"`" `"$filePath`" /S /EXPRESSUNINSTALL=1" -NoNewWindow -Wait
 
-    if (!$uninstall) {
-        Write-Warning "$($packageArgs.packageName) has already been uninstalled by other means."
-    }
+    Remove-Item $filePath -Force -ErrorAction SilentlyContinue
+    Remove-Item "$filePath.ignore" -Recurse -Force -ErrorAction SilentlyContinue
 }

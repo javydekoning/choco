@@ -8,18 +8,13 @@ if (!$procName.Contains('Ryzen')) {
 else {
     $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-    # Need to uninstall any existing version
-    Write-Information 'Attempting removal of existing AMD Ryzen Chipset drivers...'
-    $uninstallFile = Join-Path -Path $toolsDir -ChildPath 'chocolateyuninstall.ps1'
-    Start-ChocolateyProcessAsAdmin "& `'$uninstallFile`'"
-
-    $url = 'https://drivers.amd.com/drivers/amd_chipset_drivers_19.10.0429.exe'
-    $checksum = 'FC811EE24F4150DA9BC4168EFCC299F2392C99763DE6CE2691686CE662A3AB8D'
-    $fullFilePath = "$toolsDir\amd-chipset-drivers.exe"
+    $url = 'https://drivers.amd.com/drivers/amd_chipset_software_2.04.28.626.exe'
+    $checksum = 'E10649A1844D1B1BAF2B0C58BEDBC033AD817EC9F68FD5322AB793D6E855718D'
+    $filePath = "$toolsDir\amd-chipset-drivers.exe"
 
     $downloadArgs = @{
         packageName  = $env:ChocolateyPackageName
-        fileFullPath = $fullFilePath
+        fileFullPath = $filePath
         url          = $url
         checksum     = $checksum
         checksumType = 'sha256'
@@ -33,28 +28,6 @@ else {
 
     Get-ChocolateyWebFile @downloadArgs
 
-    $extractionPath = "$toolsDir\AMD-Chipset-Drivers"
-    Get-ChocolateyUnzip -FileFullPath $fullFilePath -Destination $extractionPath
-
-    $installerType = 'EXE'
-    $filePath = "$extractionPath\Setup.exe"
-    $checksum = 'FA360E1966FBF9D66C340C156D81A8BF2069EBFE609EB5741BE56C85F1E017B7'
-    $slientArgs = '-INSTALL'
-
-    $packageArgs = @{
-        packageName    = $env:ChocolateyPackageName
-        unzipLocation  = $toolsDir
-        fileType       = $installerType
-        file           = $filePath
-        softwareName   = 'amd-ryzen-chipset*'
-        checksum       = $checksum
-        checksumType   = 'sha256'
-        silentArgs     = $slientArgs
-        validExitCodes = @(0)
-    }
-
-    Install-ChocolateyInstallPackage @packageArgs
-
-    Remove-Item $fullFilePath -Force -ErrorAction SilentlyContinue
-    Remove-Item $extractionPath -Recurse -Force -ErrorAction SilentlyContinue
+    Start-Process -FilePath "$env:comspec" -ArgumentList "/c START /WAIT `"`" `"$filePath`" /S" -NoNewWindow -Wait
+    New-Item -Path "$filePath.ignore" -ItemType File
 }

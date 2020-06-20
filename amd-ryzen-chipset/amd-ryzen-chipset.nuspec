@@ -4,7 +4,7 @@
   <metadata>
     <id>amd-ryzen-chipset</id>
     <owners>dgatto</owners>
-    <version>19.10.0429</version>
+    <version>2.04.28.626</version>
     <title>AMD Ryzen Chipset Drivers</title>
     <authors>Advanced Micro Devices Inc</authors>
     <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>
@@ -13,7 +13,7 @@
     <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/amd-ryzen-chipset/amd.png</iconUrl>
     <licenseUrl>https://www.amd.com/en/support/eula</licenseUrl>
     <copyright>©2019 Advanced Micro Devices, Inc</copyright>
-    <tags>amd ryzen threadripper chipset am4 tr4 a320 b350 b450 x370 x470 x399</tags>
+    <tags>amd ryzen threadripper chipset am4 tr4 trx4 a320 b350 b450 x370 x470 x399 x570</tags>
     <summary>
 AMD Ryzen™ chipset drivers for both socket AM4 and TR4.
     </summary>
@@ -33,19 +33,23 @@ Windows® 7/10 for
 
 Windows® 10 only for
 
+- 3rd Gen AMD Ryzen™ Threadripper™ Processors
+- 3rd Gen AMD Ryzen™ Desktop Processor
 - 2nd Gen AMD Ryzen™ Threadripper™ Processor
 - AMD Ryzen™ Threadripper™ Processor
-- AMD Ryzen™ Desktop Processor with Radeon™ Vega Graphics
-- AMD Ryzen™ Mobile Processor with Radeon™ Vega Graphics
+- AMD Ryzen™ Desktop Processor with Radeon™ Graphics
+- AMD Ryzen™ Mobile Processor with Radeon™ Graphics
 - AMD X399 Chipset
+- AMD X570 Chipset
+- AMD TRX40 Chipset
 
 Package Includes:
 
 - AMD Chipset Drivers
-- AMD Ryzen™ Balanced Power Plan
+- AMD Ryzen™ Power Plans (required for UEFI CPPC2 in Windows® 10 May 2019 Update)
     </description>
     <dependencies>
-      <dependency id="vcredist2017" version="14.15.26706" />
+      <dependency id="vcredist2015" version="14.0.24212.0" />
       <dependency id="chocolatey-core.extension" version="1.1.0" />
     </dependencies>
   </metadata>
