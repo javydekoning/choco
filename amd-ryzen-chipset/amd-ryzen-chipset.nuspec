@@ -4,20 +4,23 @@
   <metadata>
     <id>amd-ryzen-chipset</id>
     <owners>dgatto</owners>
-    <version>2.04.28.626</version>
+    <version>2020.6.3</version>
     <title>AMD Ryzen Chipset Drivers</title>
     <authors>Advanced Micro Devices Inc</authors>
-    <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>
-    <docsUrl>https://www.amd.com/en/support/contact</docsUrl>
-    <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/amd-ryzen-chipset</packageSourceUrl>
-    <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/amd-ryzen-chipset/amd.png</iconUrl>
     <licenseUrl>https://www.amd.com/en/support/eula</licenseUrl>
-    <copyright>©2019 Advanced Micro Devices, Inc</copyright>
+    <projectUrl>https://www.amd.com/en/products/chipsets-am4</projectUrl>    
+    <iconUrl>https://raw.githubusercontent.com/dmariogatto/choco/master/amd-ryzen-chipset/amd.png</iconUrl>
+    <packageSourceUrl>https://github.com/dmariogatto/choco/tree/master/amd-ryzen-chipset</packageSourceUrl>
+    <docsUrl>https://www.amd.com/en/support/contact</docsUrl>
+    <copyright>©2020 Advanced Micro Devices, Inc</copyright>
     <tags>amd ryzen threadripper chipset am4 tr4 trx4 a320 b350 b450 x370 x470 x399 x570</tags>
     <summary>
 AMD Ryzen™ chipset drivers for both socket AM4 and TR4.
     </summary>
     <description>
+Revision Number: __2.04.28.626__
+Release Date: 3 June 2020
+
 Supports:
 
 Windows® 7/10 for
@@ -48,6 +51,7 @@ Package Includes:
 - AMD Chipset Drivers
 - AMD Ryzen™ Power Plans (required for UEFI CPPC2 in Windows® 10 May 2019 Update)
     </description>
+    <releaseNotes>https://www.amd.com/en/support/kb/release-notes/rn-ryzen-chipset-2-04-28-626</releaseNotes>
     <dependencies>
       <dependency id="vcredist2015" version="14.0.24212.0" />
       <dependency id="chocolatey-core.extension" version="1.1.0" />
