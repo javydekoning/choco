@@ -4,7 +4,7 @@
   <metadata>
     <id>amd-ryzen-chipset</id>
     <owners>dgatto</owners>
-    <version>2020.6.3</version>
+    <version>2020.7.21</version>
     <title>AMD Ryzen Chipset Drivers</title>
     <authors>Advanced Micro Devices Inc</authors>
     <licenseUrl>https://www.amd.com/en/support/eula</licenseUrl>
@@ -18,8 +18,8 @@
 AMD Ryzen™ chipset drivers for both socket AM4 and TR4.
     </summary>
     <description>
-Revision Number: __2.04.28.626__
-Release Date: 3 June 2020
+Revision Number: __2.07.14.327__
+Release Date: 21 July 2020
 
 Supports:
 
@@ -51,7 +51,7 @@ Package Includes:
 - AMD Chipset Drivers
 - AMD Ryzen™ Power Plans (required for UEFI CPPC2 in Windows® 10 May 2019 Update)
     </description>
-    <releaseNotes>https://www.amd.com/en/support/kb/release-notes/rn-ryzen-chipset-2-04-28-626</releaseNotes>
+    <releaseNotes>https://www.amd.com/en/support/kb/release-notes/rn-ryzen-chipset-2-07-14-327</releaseNotes>
     <dependencies>
       <dependency id="vcredist2015" version="14.0.24212.0" />
       <dependency id="chocolatey-core.extension" version="1.1.0" />

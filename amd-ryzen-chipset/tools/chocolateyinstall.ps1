@@ -1,15 +1,16 @@
 ﻿$ErrorActionPreference = 'Stop';
 
 $procName = (Get-WmiObject Win32_Processor).Name
+
 if (!$procName.Contains('Ryzen')) {
     Write-Warning 'Only compatible with AMD Ryzen processors!'
-    Write-Warning 'Skipping install...'
+    Write-Error "Processor not supported: $procName"
 }
 else {
     $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-    $url = 'https://drivers.amd.com/drivers/amd_chipset_software_2.04.28.626.exe'
-    $checksum = 'E10649A1844D1B1BAF2B0C58BEDBC033AD817EC9F68FD5322AB793D6E855718D'
+    $url = 'https://drivers.amd.com/drivers/amd_chipset_software_2.07.14.327.exe'
+    $checksum = '053C486B63A0A1F02AD564167DBC32CAE88BBAA41F0BF1F104D505BC599CA546'
     $filePath = "$toolsDir\amd-chipset-drivers.exe"
 
     $downloadArgs = @{
