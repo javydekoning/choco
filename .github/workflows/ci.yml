@@ -49,9 +49,10 @@ jobs:
             $chocoInst | Out-File $RepoFile
 
             write-host "::set-output name=new_version::true"
+          } else {
+            write-host "::set-output name=new_version::false"
           }
 
-          write-host "::set-output name=new_version::false"
   publish:
     needs: build
     if: ${{ needs.build.outputs.new_version == 'true' }}
