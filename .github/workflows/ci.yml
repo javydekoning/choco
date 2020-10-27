@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    id: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,6 +23,7 @@ jobs:
           echo $url
           echo ::set-output name=url::$url
       - name: update chocolateyinstall.ps1
+        id: update
         shell: pwsh
         env:
           LINK: ${{ steps.link.outputs.url }}
@@ -41,3 +43,16 @@ jobs:
           $chocoInst | Out-File $chocoInstLoc
 
           cat $chocoInstLoc
+
+          write-host "::set-output name=newversion::false"
+  publish:
+    if: jobs.build.steps.update.outputs.newversion == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v5
+        with:
+          branch: version
+          message: "Automated update to version xxx"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
