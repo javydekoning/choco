@@ -45,7 +45,7 @@ jobs:
 
           write-host "::set-output name=newversion::false"
   publish:
-    if: jobs.build.steps.update.outputs.newversion == 'true'
+    if: steps.update.outputs.newversion == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: test
