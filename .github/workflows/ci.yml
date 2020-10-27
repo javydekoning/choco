@@ -23,10 +23,10 @@ jobs:
           | lynx -stdin -dump | grep -m 1 drivers.amd.com/drivers/amd_chipset_software_ | cut -d ' ' -f 3)
           echo ::set-output name=url::$url
 
-          repo_ver=grep -Po '\d+\.\d+\.\d+\.\d+' ./amd-ryzen-chipset/tools/chocolateyinstall.ps1
+          repo_ver=$(grep -Po '\d+\.\d+\.\d+\.\d+' ./amd-ryzen-chipset/tools/chocolateyinstall.ps1)
           echo ::set-output name=repo_ver::$repo_ver
 
-          amdc_ver=echo $url | grep -Po '\d+\.\d+\.\d+\.\d+'
+          amdc_ver=$(echo $url | grep -Po '\d+\.\d+\.\d+\.\d+')
           echo ::set-output name=amdc_ver::$amdc_ver
   publish:
     needs: pre_build
