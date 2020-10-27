@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.update.outputs.new_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -46,12 +48,13 @@ jobs:
             $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
             $chocoInst | Out-File $RepoFile
 
-            write-host "::set-output name=newversion::true"
+            write-host "::set-output name=new_version::true"
           }
 
-          write-host "::set-output name=newversion::false"
+          write-host "::set-output name=new_version::false"
   publish:
-    if: ${{ steps.update.outputs.newversion == 'true' }}
+    needs: build
+    if: ${{ needs.build.outputs.new_version == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: test
