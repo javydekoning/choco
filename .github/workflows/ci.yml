@@ -45,7 +45,7 @@ jobs:
         run: |
           $RepoFile    = './amd-ryzen-chipset/tools/chocolateyinstall.ps1'
           $chocoInst   = Get-Content $RepoFile -raw
-          $FileName    = $ENV:LINK -split '/')[-1]
+          $FileName    = ($ENV:LINK -split '/')[-1]
           $FileVersion = $ENV:amdc_ver
           $RepoVersion = $ENV:repo_ver
 
@@ -64,10 +64,10 @@ jobs:
           $chocoInst | Out-File $RepoFile
 
           cat $RepoFile
-  # - name: Commit changes
-  #   uses: EndBug/add-and-commit@v5
-  #   with:
-  #     branch: version
-  #     message: "Automated update to version xxx"
+  - name: Commit changes
+    uses: EndBug/add-and-commit@v5
+    with:
+      branch: version
+      message: "Automated update to version ${{ needs.pre_build.outputs.amdc_ver }}"
   #     env:
   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
