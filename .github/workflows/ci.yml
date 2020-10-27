@@ -27,34 +27,42 @@ jobs:
         env:
           LINK: ${{ steps.link.outputs.url }}
         run: |
-          $FileName = ($ENV:LINK -split '/')[-1]
-          $Version = $ENV:LINK | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
-          Invoke-Webrequest -UseBasicParsing `
-                            -OutFile $FileName `
-                            -Headers @{Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450'} `
-                            -Uri $ENV:LINK 
-          $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
+          $RepoFile    = './amd-ryzen-chipset/tools/chocolateyinstall.ps1'
+          $chocoInst   = Get-Content $RepoFile -raw
+          $FileName    = ($ENV:LINK -split '/')[-1]
+          $FileVersion = $ENV:LINK | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
+          $RepoVersion = $chocoInst | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
 
-          $chocoInstLoc = './amd-ryzen-chipset/tools/chocolateyinstall.ps1'
-          $chocoInst    = Get-Content $chocoInstLoc -raw
-          $chocoInst    = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
-          $chocoInst    = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
-          $chocoInst | Out-File $chocoInstLoc
+          if ($FileVersion -ne $RepoVersion) {
+            Write-Host "Found: $FileVersion, Repo has: $RepoVersion downloading new version..."
+            Invoke-Webrequest -UseBasicParsing `
+                              -OutFile $FileName `
+                              -Headers @{Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450'} `
+                              -Uri $ENV:LINK
+            
+            Write-Host "Generating sha256 hash..."
+            $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
 
-          cat $chocoInstLoc
+            Write-Host "Updating $RepoFile. .."
+            $chocoInst    = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
+            $chocoInst    = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
+            $chocoInst | Out-File $RepoFile
+
+            write-host "::set-output name=newversion::true"
+          }
 
           write-host "::set-output name=newversion::false"
-  publish:
-    if: steps.update.outputs.newversion == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          ls -latr
-      # - name: Commit changes
-      #   uses: EndBug/add-and-commit@v5
-      #   with:
-      #     branch: version
-      #     message: "Automated update to version xxx"
-      #     env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # publish:
+  #   if: steps.update.outputs.newversion == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: test
+  #       run: |
+  #         ls -latr
+  # - name: Commit changes
+  #   uses: EndBug/add-and-commit@v5
+  #   with:
+  #     branch: version
+  #     message: "Automated update to version xxx"
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
