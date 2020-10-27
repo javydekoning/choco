@@ -48,10 +48,13 @@ jobs:
     if: jobs.build.steps.update.outputs.newversion == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v5
-        with:
-          branch: version
-          message: "Automated update to version xxx"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: test
+        run: |
+          ls -latr
+      # - name: Commit changes
+      #   uses: EndBug/add-and-commit@v5
+      #   with:
+      #     branch: version
+      #     message: "Automated update to version xxx"
+      #     env:
+      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
