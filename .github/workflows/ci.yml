@@ -40,28 +40,30 @@ jobs:
         shell: pwsh
         env:
           LINK: ${{ needs.pre_build.outputs.url }}
+          repo_ver: ${{ needs.pre_build.outputs.repo_ver }}
+          amdc_ver: ${{ needs.pre_build.outputs.amdc_ver }}
         run: |
           $RepoFile    = './amd-ryzen-chipset/tools/chocolateyinstall.ps1'
           $chocoInst   = Get-Content $RepoFile -raw
-          $FileName    = ($ENV:LINK -split '/')[-1]
-          $FileVersion = $ENV:LINK | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
-          $RepoVersion = $chocoInst | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
-          if ($FileVersion -ne $RepoVersion) {
-            Write-Host "Found: $FileVersion, Repo has: $RepoVersion downloading new version..."
-            Invoke-Webrequest -UseBasicParsing `
-                              -OutFile $FileName `
-                              -Headers @{Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450'} `
-                              -Uri $ENV:LINK
-            Write-Host "Generating sha256 hash..."
-            $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
-            Write-Host "Updating $RepoFile ..."
-            $chocoInst = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
-            $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
-            $chocoInst | Out-File $RepoFile
-            write-host "::set-output name=new_version::true"
-          } else {
-            write-host "::set-output name=new_version::false"
-          }
+          $FileName    = $ENV:LINK -split '/')[-1]
+          $FileVersion = $ENV:amdc_ver
+          $RepoVersion = $ENV:repo_ver
+
+          Write-Host "Found: $FileVersion, Repo has: $RepoVersion downloading new version..."
+          Invoke-Webrequest -UseBasicParsing `
+                            -OutFile $FileName `
+                            -Headers @{Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450'} `
+                            -Uri $ENV:LINK
+
+          Write-Host "Generating sha256 hash..."
+          $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
+
+          Write-Host "Updating $RepoFile ..."
+          $chocoInst = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
+          $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
+          $chocoInst | Out-File $RepoFile
+
+          cat $RepoFile
   # - name: Commit changes
   #   uses: EndBug/add-and-commit@v5
   #   with:
