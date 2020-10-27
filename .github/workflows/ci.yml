@@ -62,10 +62,11 @@ jobs:
           $chocoInst = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
           $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
           $chocoInst | Out-File $RepoFile
-  - name: Commit changes
-    uses: EndBug/add-and-commit@v5
-    with:
-      branch: version
-      message: "Automated update to version ${{ needs.pre_build.outputs.amdc_ver }}"
+          cat $RepoFile
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v5
+        with:
+          branch: version
+          message: "Automated update to version ${{ needs.pre_build.outputs.amdc_ver }}"
   #     env:
   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
