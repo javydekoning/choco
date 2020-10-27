@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: discover
-        run: ls -latr
       - name: Get latest link
         id: link
         run: |
@@ -43,22 +41,22 @@ jobs:
             Write-Host "Generating sha256 hash..."
             $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
 
-            Write-Host "Updating $RepoFile. .."
-            $chocoInst    = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
-            $chocoInst    = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
+            Write-Host "Updating $RepoFile ..."
+            $chocoInst = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
+            $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
             $chocoInst | Out-File $RepoFile
 
             write-host "::set-output name=newversion::true"
           }
 
           write-host "::set-output name=newversion::false"
-  # publish:
-  #   if: steps.update.outputs.newversion == 'true'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: test
-  #       run: |
-  #         ls -latr
+  publish:
+    if: ${{ steps.update.outputs.newversion == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          ls -latr
   # - name: Commit changes
   #   uses: EndBug/add-and-commit@v5
   #   with:
