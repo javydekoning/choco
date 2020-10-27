@@ -5,62 +5,61 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  pre_build:
     runs-on: ubuntu-latest
     outputs:
-      new_version: ${{ steps.update.outputs.new_version }}
+      repo_ver: ${{ steps.compare.outputs.repo_ver }}
+      amdc_ver: ${{ steps.compare.outputs.amdc_ver }}
+      url: ${{ steps.compare.outputs.url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Get latest link
-        id: link
+      - name: Compare Versions
+        id: compare
         run: |
           sudo apt-get update && sudo apt-get install -y lynx
           url=$(curl -s 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450' \
           -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:82.0) Gecko/20100101 Firefox/82.0' \
           | lynx -stdin -dump | grep -m 1 drivers.amd.com/drivers/amd_chipset_software_ | cut -d ' ' -f 3)
-          echo $url
           echo ::set-output name=url::$url
+
+          repo_ver=grep -Po '\d+\.\d+\.\d+\.\d+' ./amd-ryzen-chipset/tools/chocolateyinstall.ps1
+          echo ::set-output name=repo_ver::$repo_ver
+
+          amdc_ver=echo $url | grep -Po '\d+\.\d+\.\d+\.\d+'
+          echo ::set-output name=amdc_ver::$amdc_ver
+  publish:
+    needs: pre_build
+    if: ${{ needs.pre_build.outputs.repo_ver != needs.pre_build.outputs.amdc_ver }}
+    runs-on: ubuntu-latest
+    steps:
       - name: update chocolateyinstall.ps1
         id: update
         shell: pwsh
         env:
-          LINK: ${{ steps.link.outputs.url }}
+          LINK: ${{ needs.pre_build.outputs.url }}
         run: |
           $RepoFile    = './amd-ryzen-chipset/tools/chocolateyinstall.ps1'
           $chocoInst   = Get-Content $RepoFile -raw
           $FileName    = ($ENV:LINK -split '/')[-1]
           $FileVersion = $ENV:LINK | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
           $RepoVersion = $chocoInst | sls -pattern "\d+\.\d+.\d+\.\d+" -AllMatches | % {$_.matches.value}
-
           if ($FileVersion -ne $RepoVersion) {
             Write-Host "Found: $FileVersion, Repo has: $RepoVersion downloading new version..."
             Invoke-Webrequest -UseBasicParsing `
                               -OutFile $FileName `
                               -Headers @{Referer = 'https://www.amd.com/en/support/chipsets/amd-socket-am4/b450'} `
                               -Uri $ENV:LINK
-            
             Write-Host "Generating sha256 hash..."
             $Hash = Get-FileHash 'amd_chipset_software_2.10.13.408.exe' -Algorithm 'SHA256' | Select-Object -ExpandProperty Hash
-
             Write-Host "Updating $RepoFile ..."
             $chocoInst = $chocoInst -replace '[a-zA-Z0-9]{64}',$Hash
             $chocoInst = $chocoInst -replace "'https://drivers.amd.com/drivers/.*'","'$ENV:LINK'"
             $chocoInst | Out-File $RepoFile
-
             write-host "::set-output name=new_version::true"
           } else {
             write-host "::set-output name=new_version::false"
           }
-
-  publish:
-    needs: build
-    if: ${{ needs.build.outputs.new_version == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          ls -latr
   # - name: Commit changes
   #   uses: EndBug/add-and-commit@v5
   #   with:
